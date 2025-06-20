@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./css/output.css" rel="stylesheet">
+  <title>Recette de cuisine</title>
+  <meta name="description" content="Recette de cuisine">
+  <meta name="author" content="Thomas Sanouiller">
+  <meta name="keywords" content="recette, cuisine, plat, dessert, entrée">
+</head>
+<body>
+  <header class="relative w-full z-10">
+    <a href="index.html" class="absolute left-[69px] top-[51px]">
+      <img src="./assets/logos/petits-plats-logo.png" class="w-[214px]" alt="Logo de Petits Plats.">
+    </a>
+  </header>
+  <main>
+    <section class="h-[667px] w-full flex flex-col items-center justify-center relative gap-[30px]">
+      <h1 class="text-white text-center text-4xl font-bold z-10 font-anton text-secondary text-center text-[44px] max-w-[700px] font-[400] leading-[140%]">CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</h1>
+      <div class="flex items-center justify-between z-10 rounded-[11px] bg-white pt-[10px] pb-[10px] pl-[35px] pr-[10px] w-[954px] gap-[10px]">
+        <input type="text" placeholder="Rechercher une recette, un ingrédient, ..." class="border-none outline-none text-tertiary text-[16px] font-[400] leading-[100%] w-full">
+        <!--RESET BUTTON HERE-->
+        <button class="flex items-center justify-center w-[52px] h-[52px] rounded-[10px] border-none outline-none bg-primary text-white hover:bg-secondary hover:text-black  transition-all duration-200">
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="29" viewBox="0 0 28 29" fill="none">
+            <circle cx="10" cy="10.4219" r="9.5" stroke="currentColor"/>
+            <line x1="18.3536" y1="19.0683" x2="27.3536" y2="28.0683" stroke="currentColor"/>
+          </svg>
+        </button>
+      </div>
+      <img src="./assets/images/hero-bg.png" class="absolute top-0 left-0 w-full h-full object-cover z-1" alt="Photo d'un plat de cuisine.">
+    </section>
+    <section class="w-full bg-quaternary pl-[104px] pr-[104px] pt-[21px] pb-[100px] flex flex-col gap-[55px]">
+      <div class="flex w-full items-center justify-between">
+        <div class="flex items-center gap-[66px]">
+          <select name="" id="">
+            <option value="">Toutes les recettes</option>
+            <option value="">Entrées</option>
+            <option value="">Plats</option>
+            <option value="">Desserts</option>
+          </select>
+          <select name="" id="">
+            <option value="">Toutes les recettes</option>
+            <option value="">Entrées</option>
+            <option value="">Plats</option>
+            <option value="">Desserts</option>
+          </select>
+          <select name="" id="">
+            <option value="">Toutes les recettes</option>
+            <option value="">Entrées</option>
+            <option value="">Plats</option>
+            <option value="">Desserts</option>
+          </select>
+        </div>
+        <p class="text-primary font-anton text-[21px] font-[400] leading-[140%]">1500 recettes</p>
+      </div>
+      <div class="w-full grid grid-cols-3 gap-[48px] ">
+        <article class="w-full h-[731px] bg-white rounded-[21px] shadow-card relative flex flex-col overflow-hidden">
+          <span class="absolute top-[22px] right-[22px] text-primary text-[12px] font-manrope font-[400] leading-[100%] py-[5px] px-[15px] bg-secondary rounded-[14px]">10min</span>
+          <img src="./assets/recipes/Recette01.jpg" class="w-full h-[253px] object-cover" alt="Photo d'un plat de cuisine.">
+          <div class="px-[25px] pt-[32px] pb-[61px] flex flex-col gap-[29px] grow">
+            <h2 class="text-primary font-anton text-[18px] font-[400] leading-[140%]">Recette 1</h2>
+            <div>
+              <p class="text-tertiary text-[16px] font-[400] leading-[140%]">Description de la recette 1</p>
+            </div>
+          </div>
+        </article>
+      </div>
+
+    </section>
+  </main>
+  <footer class="w-full h-[100px] bg-quaternary">
+  </footer>
+</body>
+</html>
