@@ -693,32 +693,20 @@ video {
   left: 69px;
 }
 
+.right-\[22px\]{
+  right: 22px;
+}
+
 .top-0{
   top: 0px;
-}
-
-.top-\[51px\]{
-  top: 51px;
-}
-
-.right-\[15px\]{
-  right: 15px;
-}
-
-.top-\[15px\]{
-  top: 15px;
-}
-
-.right-\[2px\]{
-  right: 2px;
 }
 
 .top-\[22px\]{
   top: 22px;
 }
 
-.right-\[22px\]{
-  right: 22px;
+.top-\[51px\]{
+  top: 51px;
 }
 
 .isolate{
@@ -775,6 +763,11 @@ video {
 
 .clear-none{
   clear: none;
+}
+
+.mx-auto{
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .mt-2{
@@ -884,8 +877,8 @@ video {
   height: 100px;
 }
 
-.h-\[200px\]{
-  height: 200px;
+.h-\[253px\]{
+  height: 253px;
 }
 
 .h-\[52px\]{
@@ -896,16 +889,12 @@ video {
   height: 667px;
 }
 
-.h-full{
-  height: 100%;
-}
-
 .h-\[731px\]{
   height: 731px;
 }
 
-.h-\[253px\]{
-  height: 253px;
+.h-full{
+  height: 100%;
 }
 
 .w-\[214px\]{
@@ -938,6 +927,10 @@ video {
 
 .max-w-\[700px\]{
   max-width: 700px;
+}
+
+.max-w-\[1236px\]{
+  max-width: 1236px;
 }
 
 .flex-shrink{
@@ -1278,6 +1271,10 @@ video {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.grid-cols-2{
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
 .flex-row{
   flex-direction: row;
 }
@@ -1466,6 +1463,10 @@ video {
   gap: 10px;
 }
 
+.gap-\[29px\]{
+  gap: 29px;
+}
+
 .gap-\[30px\]{
   gap: 30px;
 }
@@ -1482,8 +1483,31 @@ video {
   gap: 66px;
 }
 
-.gap-\[29px\]{
-  gap: 29px;
+.gap-\[1px\]{
+  gap: 1px;
+}
+
+.gap-y-\[48px\]{
+  row-gap: 48px;
+}
+
+.gap-y-\[21px\]{
+  row-gap: 21px;
+}
+
+.gap-x-\[48px\]{
+  -moz-column-gap: 48px;
+       column-gap: 48px;
+}
+
+.gap-x-\[64px\]{
+  -moz-column-gap: 64px;
+       column-gap: 64px;
+}
+
+.gap-x-\[21px\]{
+  -moz-column-gap: 21px;
+       column-gap: 21px;
 }
 
 .space-x-2 > :not([hidden]) ~ :not([hidden]){
@@ -1810,12 +1834,12 @@ video {
   border-radius: 11px;
 }
 
-.rounded-\[21px\]{
-  border-radius: 21px;
-}
-
 .rounded-\[14px\]{
   border-radius: 14px;
+}
+
+.rounded-\[21px\]{
+  border-radius: 21px;
 }
 
 .rounded-b{
@@ -1957,14 +1981,14 @@ video {
   background-color: rgb(237 237 237 / var(--tw-bg-opacity, 1));
 }
 
-.bg-white{
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
-}
-
 .bg-secondary{
   --tw-bg-opacity: 1;
   background-color: rgb(255 209 91 / var(--tw-bg-opacity, 1));
+}
+
+.bg-white{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
 }
 
 .decoration-slice{
@@ -2077,8 +2101,8 @@ video {
      object-fit: scale-down;
 }
 
-.p-\[22px\]{
-  padding: 22px;
+.p-\[16px\]{
+  padding: 16px;
 }
 
 .px-1{
@@ -2096,16 +2120,6 @@ video {
   padding-right: 1.25rem;
 }
 
-.px-\[10px\]{
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-.py-\[5px\]{
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
-
 .px-\[15px\]{
   padding-left: 15px;
   padding-right: 15px;
@@ -2116,12 +2130,36 @@ video {
   padding-right: 25px;
 }
 
+.py-\[5px\]{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.px-\[20px\]{
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.py-\[10px\]{
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.px-\[16px\]{
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
 .pb-\[100px\]{
   padding-bottom: 100px;
 }
 
 .pb-\[10px\]{
   padding-bottom: 10px;
+}
+
+.pb-\[61px\]{
+  padding-bottom: 61px;
 }
 
 .pl-\[104px\]{
@@ -2146,18 +2184,6 @@ video {
 
 .pt-\[21px\]{
   padding-top: 21px;
-}
-
-.pb-\[30px\]{
-  padding-bottom: 30px;
-}
-
-.pt-\[25px\]{
-  padding-top: 25px;
-}
-
-.pb-\[61px\]{
-  padding-bottom: 61px;
 }
 
 .pt-\[32px\]{
@@ -2233,28 +2259,28 @@ video {
   line-height: 2.5rem;
 }
 
+.text-\[12px\]{
+  font-size: 12px;
+}
+
 .text-\[16px\]{
   font-size: 16px;
+}
+
+.text-\[18px\]{
+  font-size: 18px;
 }
 
 .text-\[21px\]{
   font-size: 21px;
 }
 
-.text-\[24px\]{
-  font-size: 24px;
-}
-
 .text-\[44px\]{
   font-size: 44px;
 }
 
-.text-\[12px\]{
-  font-size: 12px;
-}
-
-.text-\[18px\]{
-  font-size: 18px;
+.text-\[14px\]{
+  font-size: 14px;
 }
 
 .font-\[400\]{
@@ -2263,6 +2289,14 @@ video {
 
 .font-bold{
   font-weight: 700;
+}
+
+.font-\[700\]{
+  font-weight: 700;
+}
+
+.font-\[500\]{
+  font-weight: 500;
 }
 
 .uppercase{

@@ -17,7 +17,7 @@
   </header>
   <main>
     <section class="h-[667px] w-full flex flex-col items-center justify-center relative gap-[30px]">
-      <h1 class="text-white text-center text-4xl font-bold z-10 font-anton text-secondary text-center text-[44px] max-w-[700px] font-[400] leading-[140%]">CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</h1>
+      <h1 class="text-center text-4xl font-bold z-10 font-anton text-secondary text-center text-[44px] max-w-[700px] font-[400] leading-[140%]">CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</h1>
       <div class="flex items-center justify-between z-10 rounded-[11px] bg-white pt-[10px] pb-[10px] pl-[35px] pr-[10px] w-[954px] gap-[10px]">
         <input type="text" placeholder="Rechercher une recette, un ingrédient, ..." class="border-none outline-none text-tertiary text-[16px] font-[400] leading-[100%] w-full">
         <!--RESET BUTTON HERE-->
@@ -31,22 +31,22 @@
       <img src="./assets/images/hero-bg.png" class="absolute top-0 left-0 w-full h-full object-cover z-1" alt="Photo d'un plat de cuisine.">
     </section>
     <section class="w-full bg-quaternary pl-[104px] pr-[104px] pt-[21px] pb-[100px] flex flex-col gap-[55px]">
-      <div class="flex w-full items-center justify-between">
+      <div class="flex w-full items-center justify-between max-w-[1236px] mx-auto">
         <div class="flex items-center gap-[66px]">
-          <select name="" id="">
-            <option value="">Toutes les recettes</option>
+          <select name="" id="" class="border-none outline-none text-primary font-manrope text-[16px] font-[500] leading-[140%] appearance-none rounded-[11px] bg-white p-[16px]">
+            <option value="" disabled selected>Ingrédients</option>
             <option value="">Entrées</option>
             <option value="">Plats</option>
             <option value="">Desserts</option>
           </select>
-          <select name="" id="">
-            <option value="">Toutes les recettes</option>
+          <select name="" id="" class="border-none outline-none text-primary font-manrope text-[16px] font-[500] leading-[140%] appearance-none rounded-[11px] bg-white p-[16px]">
+            <option value="" disabled selected>Appareils</option>
             <option value="">Entrées</option>
             <option value="">Plats</option>
             <option value="">Desserts</option>
           </select>
-          <select name="" id="">
-            <option value="">Toutes les recettes</option>
+          <select name="" id="" class="border-none outline-none text-primary font-manrope text-[16px] font-[500] leading-[140%] appearance-none rounded-[11px] bg-white p-[16px]">
+            <option value="" disabled selected>Ustensiles</option>
             <option value="">Entrées</option>
             <option value="">Plats</option>
             <option value="">Desserts</option>
@@ -54,19 +54,152 @@
         </div>
         <p class="text-primary font-anton text-[21px] font-[400] leading-[140%]">1500 recettes</p>
       </div>
-      <div class="w-full grid grid-cols-3 gap-[48px] ">
+      <div class="w-full grid grid-cols-3 gap-[48px] max-w-[1236px] mx-auto">
         <article class="w-full h-[731px] bg-white rounded-[21px] shadow-card relative flex flex-col overflow-hidden">
           <span class="absolute top-[22px] right-[22px] text-primary text-[12px] font-manrope font-[400] leading-[100%] py-[5px] px-[15px] bg-secondary rounded-[14px]">10min</span>
           <img src="./assets/recipes/Recette01.jpg" class="w-full h-[253px] object-cover" alt="Photo d'un plat de cuisine.">
           <div class="px-[25px] pt-[32px] pb-[61px] flex flex-col gap-[29px] grow">
-            <h2 class="text-primary font-anton text-[18px] font-[400] leading-[140%]">Recette 1</h2>
-            <div>
-              <p class="text-tertiary text-[16px] font-[400] leading-[140%]">Description de la recette 1</p>
+            <h2 class="text-primary font-anton text-[18px] font-[400] leading-[140%]">Limonade de coco</h2>
+            <div class="flex flex-col gap-[10px]">
+              <h3 class="text-tertiary font-manrope text-[12px] font-[700] leading-[140%]">RECETTE</h3>
+              <p class="text-primary font-manrope text-[14px] font-[400] leading-[140%]">Mettre les glaçons à votre goût dans le blender, ajouter le lait, la crème de coco, le jus de 2 citrons et le sucre. Mixer jusqu'à avoir la consistence désirée.</p>
+            </div>
+            <div class="flex flex-col gap-[10px]">
+              <h3 class="text-tertiary font-manrope text-[12px] font-[700] leading-[140%]">INGRÉDIENTS</h3>
+              <div class="w-full grid grid-cols-2 gap-y-[21px]">
+                <div class="flex flex-col gap-[1px]">
+                  <p class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">Lait de coco</p>
+                  <p class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">400ml</p>
+                </div>
+                <div class="flex flex-col gap-[1px]">
+                  <p class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">Jus de citron</p>
+                  <p class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">2</p>
+                </div>
+                <div class="flex flex-col gap-[1px]">
+                  <p class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">Créme de coco</p>
+                  <p class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">4 cuillères</p>
+                </div>
+                <div class="flex flex-col gap-[1px]">
+                  <p class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">Sucre</p>
+                  <p class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">20g</p>
+                </div>
+                <div class="flex flex-col gap-[1px]">
+                  <p class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">Glaçons</p>
+                  <p class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">2</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+        <article class="w-full h-[731px] bg-white rounded-[21px] shadow-card relative flex flex-col overflow-hidden">
+          <span class="absolute top-[22px] right-[22px] text-primary text-[12px] font-manrope font-[400] leading-[100%] py-[5px] px-[15px] bg-secondary rounded-[14px]">10min</span>
+          <img src="./assets/recipes/Recette01.jpg" class="w-full h-[253px] object-cover" alt="Photo d'un plat de cuisine.">
+          <div class="px-[25px] pt-[32px] pb-[61px] flex flex-col gap-[29px] grow">
+            <h2 class="text-primary font-anton text-[18px] font-[400] leading-[140%]">Limonade de coco</h2>
+            <div class="flex flex-col gap-[10px]">
+              <h3 class="text-tertiary font-manrope text-[12px] font-[700] leading-[140%]">RECETTE</h3>
+              <p class="text-primary font-manrope text-[14px] font-[400] leading-[140%]">Mettre les glaçons à votre goût dans le blender, ajouter le lait, la crème de coco, le jus de 2 citrons et le sucre. Mixer jusqu'à avoir la consistence désirée.</p>
+            </div>
+            <div class="flex flex-col gap-[10px]">
+              <h3 class="text-tertiary font-manrope text-[12px] font-[700] leading-[140%]">INGRÉDIENTS</h3>
+              <div class="w-full grid grid-cols-2 gap-y-[21px]">
+                <div class="flex flex-col gap-[1px]">
+                  <p class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">Lait de coco</p>
+                  <p class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">400ml</p>
+                </div>
+                <div class="flex flex-col gap-[1px]">
+                  <p class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">Jus de citron</p>
+                  <p class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">2</p>
+                </div>
+                <div class="flex flex-col gap-[1px]">
+                  <p class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">Créme de coco</p>
+                  <p class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">4 cuillères</p>
+                </div>
+                <div class="flex flex-col gap-[1px]">
+                  <p class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">Sucre</p>
+                  <p class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">20g</p>
+                </div>
+                <div class="flex flex-col gap-[1px]">
+                  <p class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">Glaçons</p>
+                  <p class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">2</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+        <article class="w-full h-[731px] bg-white rounded-[21px] shadow-card relative flex flex-col overflow-hidden">
+          <span class="absolute top-[22px] right-[22px] text-primary text-[12px] font-manrope font-[400] leading-[100%] py-[5px] px-[15px] bg-secondary rounded-[14px]">10min</span>
+          <img src="./assets/recipes/Recette01.jpg" class="w-full h-[253px] object-cover" alt="Photo d'un plat de cuisine.">
+          <div class="px-[25px] pt-[32px] pb-[61px] flex flex-col gap-[29px] grow">
+            <h2 class="text-primary font-anton text-[18px] font-[400] leading-[140%]">Limonade de coco</h2>
+            <div class="flex flex-col gap-[10px]">
+              <h3 class="text-tertiary font-manrope text-[12px] font-[700] leading-[140%]">RECETTE</h3>
+              <p class="text-primary font-manrope text-[14px] font-[400] leading-[140%]">Mettre les glaçons à votre goût dans le blender, ajouter le lait, la crème de coco, le jus de 2 citrons et le sucre. Mixer jusqu'à avoir la consistence désirée.</p>
+            </div>
+            <div class="flex flex-col gap-[10px]">
+              <h3 class="text-tertiary font-manrope text-[12px] font-[700] leading-[140%]">INGRÉDIENTS</h3>
+              <div class="w-full grid grid-cols-2 gap-y-[21px]">
+                <div class="flex flex-col gap-[1px]">
+                  <p class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">Lait de coco</p>
+                  <p class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">400ml</p>
+                </div>
+                <div class="flex flex-col gap-[1px]">
+                  <p class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">Jus de citron</p>
+                  <p class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">2</p>
+                </div>
+                <div class="flex flex-col gap-[1px]">
+                  <p class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">Créme de coco</p>
+                  <p class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">4 cuillères</p>
+                </div>
+                <div class="flex flex-col gap-[1px]">
+                  <p class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">Sucre</p>
+                  <p class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">20g</p>
+                </div>
+                <div class="flex flex-col gap-[1px]">
+                  <p class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">Glaçons</p>
+                  <p class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">2</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+        <article class="w-full h-[731px] bg-white rounded-[21px] shadow-card relative flex flex-col overflow-hidden">
+          <span class="absolute top-[22px] right-[22px] text-primary text-[12px] font-manrope font-[400] leading-[100%] py-[5px] px-[15px] bg-secondary rounded-[14px]">10min</span>
+          <img src="./assets/recipes/Recette01.jpg" class="w-full h-[253px] object-cover" alt="Photo d'un plat de cuisine.">
+          <div class="px-[25px] pt-[32px] pb-[61px] flex flex-col gap-[29px] grow">
+            <h2 class="text-primary font-anton text-[18px] font-[400] leading-[140%]">Limonade de coco</h2>
+            <div class="flex flex-col gap-[10px]">
+              <h3 class="text-tertiary font-manrope text-[12px] font-[700] leading-[140%]">RECETTE</h3>
+              <p class="text-primary font-manrope text-[14px] font-[400] leading-[140%]">Mettre les glaçons à votre goût dans le blender, ajouter le lait, la crème de coco, le jus de 2 citrons et le sucre. Mixer jusqu'à avoir la consistence désirée.</p>
+            </div>
+            <div class="flex flex-col gap-[10px]">
+              <h3 class="text-tertiary font-manrope text-[12px] font-[700] leading-[140%]">INGRÉDIENTS</h3>
+              <div class="w-full grid grid-cols-2 gap-y-[21px]">
+                <div class="flex flex-col gap-[1px]">
+                  <p class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">Lait de coco</p>
+                  <p class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">400ml</p>
+                </div>
+                <div class="flex flex-col gap-[1px]">
+                  <p class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">Jus de citron</p>
+                  <p class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">2</p>
+                </div>
+                <div class="flex flex-col gap-[1px]">
+                  <p class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">Créme de coco</p>
+                  <p class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">4 cuillères</p>
+                </div>
+                <div class="flex flex-col gap-[1px]">
+                  <p class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">Sucre</p>
+                  <p class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">20g</p>
+                </div>
+                <div class="flex flex-col gap-[1px]">
+                  <p class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">Glaçons</p>
+                  <p class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">2</p>
+                </div>
+              </div>
             </div>
           </div>
         </article>
       </div>
-
     </section>
   </main>
   <footer class="w-full h-[100px] bg-quaternary">
