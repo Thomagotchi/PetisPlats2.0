@@ -782,6 +782,20 @@ video {
   box-sizing: content-box;
 }
 
+.line-clamp-3{
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.line-clamp-4{
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
 .line-clamp-none{
   overflow: visible;
   display: block;
@@ -897,6 +911,10 @@ video {
   height: 100%;
 }
 
+.max-h-\[4lh\]{
+  max-height: 4lh;
+}
+
 .w-\[214px\]{
   width: 214px;
 }
@@ -925,12 +943,12 @@ video {
   width: 100%;
 }
 
-.max-w-\[700px\]{
-  max-width: 700px;
-}
-
 .max-w-\[1236px\]{
   max-width: 1236px;
+}
+
+.max-w-\[700px\]{
+  max-width: 700px;
 }
 
 .flex-shrink{
@@ -1267,12 +1285,12 @@ video {
   grid-auto-flow: column dense;
 }
 
-.grid-cols-3{
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
 .grid-cols-2{
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-cols-3{
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .flex-row{
@@ -1463,6 +1481,10 @@ video {
   gap: 10px;
 }
 
+.gap-\[1px\]{
+  gap: 1px;
+}
+
 .gap-\[29px\]{
   gap: 29px;
 }
@@ -1483,31 +1505,8 @@ video {
   gap: 66px;
 }
 
-.gap-\[1px\]{
-  gap: 1px;
-}
-
-.gap-y-\[48px\]{
-  row-gap: 48px;
-}
-
 .gap-y-\[21px\]{
   row-gap: 21px;
-}
-
-.gap-x-\[48px\]{
-  -moz-column-gap: 48px;
-       column-gap: 48px;
-}
-
-.gap-x-\[64px\]{
-  -moz-column-gap: 64px;
-       column-gap: 64px;
-}
-
-.gap-x-\[21px\]{
-  -moz-column-gap: 21px;
-       column-gap: 21px;
 }
 
 .space-x-2 > :not([hidden]) ~ :not([hidden]){
@@ -2135,21 +2134,6 @@ video {
   padding-bottom: 5px;
 }
 
-.px-\[20px\]{
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-.py-\[10px\]{
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-.px-\[16px\]{
-  padding-left: 16px;
-  padding-right: 16px;
-}
-
 .pb-\[100px\]{
   padding-bottom: 100px;
 }
@@ -2263,6 +2247,10 @@ video {
   font-size: 12px;
 }
 
+.text-\[14px\]{
+  font-size: 14px;
+}
+
 .text-\[16px\]{
   font-size: 16px;
 }
@@ -2279,24 +2267,20 @@ video {
   font-size: 44px;
 }
 
-.text-\[14px\]{
-  font-size: 14px;
-}
-
 .font-\[400\]{
   font-weight: 400;
 }
 
-.font-bold{
-  font-weight: 700;
+.font-\[500\]{
+  font-weight: 500;
 }
 
 .font-\[700\]{
   font-weight: 700;
 }
 
-.font-\[500\]{
-  font-weight: 500;
+.font-bold{
+  font-weight: 700;
 }
 
 .uppercase{
