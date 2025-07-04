@@ -1,79 +1,87 @@
 import { recipes } from "../../data/recipes.js";
 
+// This function takes an array, iterates over it and renders each recipe to the DOM
 export function renderRecipes(recipes) {
-  const recipeTemplate = document.querySelector(
-    '[data-attribute="recipe-template"]'
-  );
-  const recipesGallery = document.querySelector(
-    '[data-attribute="recipes-gallery"]'
-  );
+  const recipesGallery = document.getElementById("recipes-gallery");
 
   recipesGallery.innerHTML = "";
 
   recipes.forEach((recipe) => {
-    const recipeClone = recipeTemplate.cloneNode(true);
-    recipeClone.setAttribute("data-name", recipe.name);
-    recipeClone.removeAttribute("data-attribute", "recipe-template");
-    recipeClone.setAttribute("data-attribute", "recipe");
-    recipeClone.style.display = "flex";
-    recipeClone.querySelector(
-      '[data-attribute="recipe-image"]'
-    ).src = `./assets/recipes/${recipe.image}`;
-    recipeClone.querySelector('[data-attribute="recipe-name"]').innerText =
-      recipe.name;
-    recipeClone.querySelector(
-      '[data-attribute="recipe-recipe-text"]'
-    ).innerText = recipe.description;
-
-    const ingredientsContainer = recipeClone.querySelector(
-      '[data-attribute="recipe-ingredient"]'
-    ).parentElement;
-    ingredientsContainer.innerHTML = "";
-
-    recipe.ingredients.forEach((ingredient, i) => {
-      const ingredientDiv = document.createElement("div");
-      ingredientDiv.className = "flex flex-col gap-[1px]";
-      ingredientDiv.innerHTML = `
-        <p class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">${
-          ingredient.ingredient
-        }</p>
-        <p class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">${
-          ingredient.quantity || ""
-        }${ingredient.unit || ""}</p>
-      `;
-      ingredientsContainer.appendChild(ingredientDiv);
-    });
-
-    recipeClone.setAttribute("data-utensils", recipe.ustensils.join(", "));
-
-    recipeClone.querySelector(
-      '[data-attribute="recipe-time"]'
-    ).innerText = `${recipe.time}min`;
-    recipesGallery.appendChild(recipeClone);
+    renderRecipe(recipe);
   });
 
-  updateRecipesCounter();
+  updateRecipesCounter(recipes);
 }
 
-export function updateRecipesCounter() {
-  const recipesCounter = document.querySelector(
-    '[data-attribute="recipes-counter"]'
-  );
-  const currentRecipes = Array.from(
-    document.querySelectorAll('[data-attribute="recipe"]')
-  );
-  recipesCounter.innerText = `${currentRecipes.length} recettes`;
+// This is the template generated in JS for a single recipe
+export function renderRecipe(recipe) {
+  const recipeElement = `
+    <article class="w-full h-[731px] bg-white rounded-[21px] shadow-card relative none flex-col overflow-hidden">
+      <span class="absolute top-[22px] right-[22px] text-primary text-[12px] font-manrope font-[400] leading-[100%] py-[5px] px-[15px] bg-secondary rounded-[14px]">${
+        recipe.time
+      }min</span>
+      <img src="./assets/recipes/${
+        recipe.image
+      }" class="w-full h-[253px] object-cover" alt="Photo d'un plat de cuisine.">
+      <div class="px-[25px] pt-[32px] pb-[61px] flex flex-col gap-[29px] grow">
+        <h2 class="text-primary font-anton text-[18px] font-[400] leading-[140%]">${
+          recipe.name
+        }</h2>
+        <div class="flex flex-col gap-[10px]">
+          <h3 class="text-tertiary font-manrope text-[12px] font-[700] leading-[140%]">RECETTE</h3>
+          <p class="text-primary font-manrope text-[14px] font-[400] leading-[140%] max-h-[4lh] overflow-hidden line-clamp-4">${
+            recipe.description
+          }</p>
+        </div>
+        <div class="flex flex-col gap-[10px]">
+          <h3 class="text-tertiary font-manrope text-[12px] font-[700] leading-[140%]">INGRÉDIENTS</h3>
+          <div class="w-full grid grid-cols-2 gap-y-[21px]">
+            ${recipe.ingredients
+              .map((ingredient) => {
+                return `
+                <div class="flex flex-col gap-[1px]">
+                  <p class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">${ingredient.ingredient}</p>
+                  <p class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">${ingredient.quantity} ${ingredient.unit}</p>
+                </div>
+              `;
+              })
+              .join("")}
+          </div>
+        </div>
+      </div>
+    </article>
+  `;
+  document
+    .getElementById("recipes-gallery")
+    .insertAdjacentHTML("beforeend", recipeElement);
+}
+
+// This function updates the counter for recipes
+export function updateRecipesCounter(recipes) {
+  const recipesCounter = document.getElementById("recipes-counter");
+  recipesCounter.innerText = `${recipes.length} recettes`;
 }
 
 // TODO:
-// I will change from select to radio with custom dropdown to make multiple selection and dom manipulation easier
+// I will change from select to checkboxs with custom dropdown to make multiple selection and dom manipulation easier
 export function updateSelect(selectType, recipes) {
-  const select = document.getElementById(selectType);
-  const options = select.querySelectorAll("option");
+  const select = document.getElementById(selectType + "-dropdown");
+  const selectLabel = document.getElementById(selectType + "-dropdown-label");
+  const selectContent = document.getElementById(
+    selectType + "-dropdown-content"
+  );
+  const options = select.querySelectorAll("input[type='checkbox']");
   const allOptions = new Set();
 
+  selectLabel.addEventListener("click", () => {
+    selectContent.classList.toggle("h-[100px!important]");
+    document
+      .getElementById(selectType + "-dropdown-icon")
+      .classList.toggle("rotate-180");
+  });
+
   Array.from(options.entries()).map((option, index) => {
-    if (index !== 0) {
+    if (option.checked) {
       option.remove();
     }
   });
@@ -92,15 +100,15 @@ export function updateSelect(selectType, recipes) {
     }
   });
 
-  Array.from(allOptions).forEach((option) => {
-    const newOption = document.createElement("option");
-    newOption.value = option;
-    newOption.innerText = option;
-    select.appendChild(newOption);
-  });
+  // Array.from(allOptions).forEach((option) => {
+  //   const newOption = document.createElement("input");
+  //   newOption.type = "checkbox";
+  //   newOption.value = option;
+  //   newOption.id = selectType + "-" + option;
+  //   newOption.name = selectType;
+  //   select.appendChild(newOption);
+  // });
 }
 
 renderRecipes(recipes);
 updateSelect("ingredients", recipes);
-updateSelect("appliance", recipes);
-updateSelect("ustensils", recipes);
