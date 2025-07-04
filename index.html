@@ -17,7 +17,7 @@
   </header>
   <main>
     <section class="h-[667px] w-full flex flex-col items-center justify-center relative gap-[30px]">
-      <h1 data-attribute="temporary-trigger" class="text-center text-4xl font-bold z-10 font-anton text-secondary text-center text-[44px] max-w-[700px] font-[400] leading-[140%]">CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</h1>
+      <h1 class="text-center text-4xl font-bold z-10 font-anton text-secondary text-center text-[44px] max-w-[700px] font-[400] leading-[140%]">CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</h1>
       <div class="flex items-center justify-between z-10 rounded-[11px] bg-white pt-[10px] pb-[10px] pl-[35px] pr-[10px] w-[954px] gap-[10px]">
         <input type="text" placeholder="Rechercher une recette, un ingrédient, ..." class="border-none outline-none text-tertiary text-[16px] font-[400] leading-[100%] w-full">
         <!--RESET BUTTON HERE-->
@@ -33,39 +33,30 @@
     <section class="w-full bg-quaternary pl-[104px] pr-[104px] pt-[21px] pb-[100px] flex flex-col gap-[55px]">
       <div class="flex w-full items-center justify-between max-w-[1236px] mx-auto">
         <div class="flex items-center gap-[66px]">
-          <select name="ingredients" id="ingredients" class="border-none outline-none text-primary font-manrope text-[16px] font-[500] leading-[140%] appearance-none rounded-[11px] bg-white p-[16px]">
-            <option value="" disabled selected>Ingrédients</option>
-          </select>
-          <select name="appliance" id="appliance" class="border-none outline-none text-primary font-manrope text-[16px] font-[500] leading-[140%] appearance-none rounded-[11px] bg-white p-[16px]">
-            <option value="" disabled selected>Appareils</option>
-          </select>
-          <select name="ustensils" id="ustensils" class="border-none outline-none text-primary font-manrope text-[16px] font-[500] leading-[140%] appearance-none rounded-[11px] bg-white p-[16px]">
-            <option value="" disabled selected>Ustensiles</option>
-          </select>
-        </div>
-        <p data-attribute="recipes-counter" class="text-primary font-anton text-[21px] font-[400] leading-[140%]">1500 recettes</p>
-      </div>
-      <div data-attribute="recipes-gallery" class="w-full grid grid-cols-3 gap-[48px] max-w-[1236px] mx-auto">
-        <article data-attribute="recipe-template" data-utensils="blender" class="w-full h-[731px] bg-white rounded-[21px] shadow-card relative none flex-col overflow-hidden">
-          <span data-attribute="recipe-time" class="absolute top-[22px] right-[22px] text-primary text-[12px] font-manrope font-[400] leading-[100%] py-[5px] px-[15px] bg-secondary rounded-[14px]">10min</span>
-          <img data-attribute="recipe-image" src="./assets/recipes/Recette01.jpg" class="w-full h-[253px] object-cover" alt="Photo d'un plat de cuisine.">
-          <div class="px-[25px] pt-[32px] pb-[61px] flex flex-col gap-[29px] grow">
-            <h2 data-attribute="recipe-name" class="text-primary font-anton text-[18px] font-[400] leading-[140%]">Limonade de coco</h2>
-            <div class="flex flex-col gap-[10px]">
-              <h3 class="text-tertiary font-manrope text-[12px] font-[700] leading-[140%]">RECETTE</h3>
-              <p data-attribute="recipe-recipe-text" class="text-primary font-manrope text-[14px] font-[400] leading-[140%] max-h-[4lh] overflow-hidden line-clamp-4">Mettre les glaçons à votre goût dans le blender, ajouter le lait, la crème de coco, le jus de 2 citrons et le sucre. Mixer jusqu'à avoir la consistence désirée.</p>
+          <div id="ingredients-dropdown" class="border-none text-primary font-manrope text-[16px] font-[500] leading-[140%] w-[192px] rounded-[11px] bg-white">
+            <div id="ingredients-dropdown-label" class="flex items-center justify-between p-[16px]">
+              <p class="text-primary font-manrope text-[16px] font-[500] leading-[140%]">Ingrédients</p>
+              <div id="ingredients-dropdown-icon" class="ease-out duration-200 flex items-center justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="8" viewBox="0 0 15 8" fill="none">
+                  <path d="M1 1L7.5 7L14 1" stroke="#1B1B1B" stroke-linecap="round"/>
+                </svg>
+              </div>
             </div>
-            <div class="flex flex-col gap-[10px]">
-              <h3 class="text-tertiary font-manrope text-[12px] font-[700] leading-[140%]">INGRÉDIENTS</h3>
-              <div class="w-full grid grid-cols-2 gap-y-[21px]">
-                <div data-attribute="recipe-ingredient" class="flex flex-col gap-[1px]">
-                  <p data-attribute="recipe-ingredient-name" class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">Lait de coco</p>
-                  <p data-attribute="recipe-ingredient-quantity" class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">400ml</p>
-                </div>
+            <div id="ingredients-dropdown-content" class="h-[0px] overflow-hidden transition-all duration-200">
+              <input type="text" class="border-[1px] border-primary rounded-[2px] outline-none text-primary font-manrope text-[14px] font-[400] leading-[100%] w-[calc(100%-32px)] p-[8px] mx-[16px] mb-[11px]">
+              <div id="ingredients-checked-filters" class="flex flex-col gap-[4px]">
+              </div>
+
+              <div class="flex relative">
+                <input type="checkbox" class="peer border-none opacity-0 outline-none absolute top-0 left-0 z-10 bg-[transparent] w-full h-full">
+                <label class="text-primary font-manrope text-[14px] font-[400] leading-[100%] w-full peer-checked:bg-secondary peer-checked:py-[9px] px-[16px]">Coco</label>
               </div>
             </div>
           </div>
-        </article>
+        </div>
+        <p id="recipes-counter" class="text-primary font-anton text-[21px] font-[400] leading-[140%]">20 recettes</p>
+      </div>
+      <div id="recipes-gallery" class="w-full grid grid-cols-3 gap-[48px] max-w-[1236px] mx-auto">
       </div>
     </section>
   </main>
