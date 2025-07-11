@@ -1,4 +1,5 @@
 import { recipes } from "../../data/recipes.js";
+import { addUrlParams, filterRecipes, removeUrlParam } from "../api/api.js";
 
 // This function takes an array, iterates over it and renders each recipe to the DOM
 export function renderRecipes(recipes) {
@@ -56,59 +57,145 @@ export function renderRecipe(recipe) {
     .insertAdjacentHTML("beforeend", recipeElement);
 }
 
+// This function renders the HTML for an option in the checked or unchecked format
+function renderSelectOption(option, checked, selectType) {
+  const targetGallery = checked
+    ? document.getElementById(selectType + "-checked-filters")
+    : document.getElementById(selectType + "-unchecked-filters");
+
+  const element = `
+    <div class="flex relative cursor-pointer">
+      <input type="checkbox" value="${option}" ${
+    checked ? "checked" : ""
+  } class="peer border-none opacity-0 outline-none absolute top-0 left-0 z-10 bg-[transparent] w-full h-full cursor-pointer">
+      <label class="text-primary font-manrope text-[14px] font-[400] leading-[100%] w-full peer-checked:bg-secondary peer-checked:py-[9px] px-[16px] cursor-pointer">${option}</label>
+    </div>
+  `;
+
+  targetGallery.insertAdjacentHTML("beforeend", element);
+}
+
 // This function updates the counter for recipes
 export function updateRecipesCounter(recipes) {
   const recipesCounter = document.getElementById("recipes-counter");
   recipesCounter.innerText = `${recipes.length} recettes`;
 }
 
-// TODO:
-// I will change from select to checkboxs with custom dropdown to make multiple selection and dom manipulation easier
+// This function updates the empty selects with the corresponding options
 export function updateSelect(selectType, recipes) {
   const select = document.getElementById(selectType + "-dropdown");
   const selectLabel = document.getElementById(selectType + "-dropdown-label");
+  const selectCheckedFilters = document.getElementById(
+    selectType + "-checked-filters"
+  );
+  const selectUncheckedFilters = document.getElementById(
+    selectType + "-unchecked-filters"
+  );
   const selectContent = document.getElementById(
     selectType + "-dropdown-content"
   );
-  const options = select.querySelectorAll("input[type='checkbox']");
-  const allOptions = new Set();
+  const allOptions = [];
+  const checkedOptions = new Set();
 
-  selectLabel.addEventListener("click", () => {
-    selectContent.classList.toggle("h-[100px!important]");
+  // Remove existing event listener to prevent duplicates
+  const newSelectLabel = selectLabel.cloneNode(true);
+  selectLabel.parentNode.replaceChild(newSelectLabel, selectLabel);
+
+  // Toggle dropdown open / close
+  newSelectLabel.addEventListener("click", (e) => {
+    selectContent.classList.toggle("h-[324px]");
+    selectContent.classList.toggle("overflow-y-scroll");
     document
-      .getElementById(selectType + "-dropdown-icon")
+      .getElementById(selectType + "-dropdown-icn")
       .classList.toggle("rotate-180");
   });
 
-  Array.from(options.entries()).map((option, index) => {
-    if (option.checked) {
-      option.remove();
-    }
-  });
+  selectCheckedFilters.innerHTML = "";
+  selectUncheckedFilters.innerHTML = "";
 
   recipes.forEach((recipe) => {
     if (selectType === "ingredients") {
       recipe.ingredients.forEach((ingredientObj) => {
-        allOptions.add(ingredientObj.ingredient);
+        if (!allOptions.includes(ingredientObj.ingredient)) {
+          allOptions.push(ingredientObj.ingredient);
+        }
       });
-    } else if (typeof recipe[selectType] === "string") {
-      allOptions.add(recipe[selectType]);
-    } else {
-      recipe[selectType].forEach((option) => {
-        allOptions.add(option);
+    } else if (selectType === "ustensiles") {
+      recipe.ustensils.forEach((ustensilObj) => {
+        if (!allOptions.includes(ustensilObj)) {
+          allOptions.push(ustensilObj);
+        }
       });
+    } else if (selectType === "appareils") {
+      if (!allOptions.includes(recipe.appliance)) {
+        allOptions.push(recipe.appliance);
+      }
     }
   });
 
-  // Array.from(allOptions).forEach((option) => {
-  //   const newOption = document.createElement("input");
-  //   newOption.type = "checkbox";
-  //   newOption.value = option;
-  //   newOption.id = selectType + "-" + option;
-  //   newOption.name = selectType;
-  //   select.appendChild(newOption);
-  // });
+  allOptions.forEach((option) => {
+    renderSelectOption(option, false, selectType);
+  });
+
+  // Add event listeners to all checkboxes
+  addCheckboxListeners(selectType, allOptions, checkedOptions);
 }
 
+// This function adds the corresponding listener to checked and unchecked boxes
+function addCheckboxListeners(selectType, allOptions, checkedOptions) {
+  const selectCheckedFilters = document.getElementById(
+    selectType + "-checked-filters"
+  );
+  const selectUncheckedFilters = document.getElementById(
+    selectType + "-unchecked-filters"
+  );
+
+  // Unchecked filter listener
+  selectUncheckedFilters.addEventListener("change", (e) => {
+    if (e.target.type === "checkbox") {
+      const option = e.target.value;
+      if (e.target.checked) {
+        e.target.closest("div").style.display = "none";
+        checkedOptions.add(option);
+        renderSelectOption(option, true, selectType);
+
+        // Add to URL parameters
+        addUrlParams(selectType, option);
+      }
+    }
+  });
+
+  // Check filter listener
+  selectCheckedFilters.addEventListener("change", (e) => {
+    if (e.target.type === "checkbox") {
+      const option = e.target.value;
+
+      if (!e.target.checked) {
+        checkedOptions.delete(option);
+        e.target.closest("div").remove();
+        const originalOption = selectUncheckedFilters.querySelector(
+          `input[value="${option}"]`
+        );
+        if (originalOption) {
+          originalOption.closest("div").style.display = "flex";
+          originalOption.checked = false;
+        }
+
+        // Remove from URL parameters
+        removeUrlParam(selectType, option);
+      }
+    }
+  });
+}
+
+// Init functions
 renderRecipes(recipes);
 updateSelect("ingredients", recipes);
+updateSelect("appareils", recipes);
+updateSelect("ustensiles", recipes);
+
+// Listen for URL changes and update recipes
+window.addEventListener("recipesShouldUpdate", (event) => {
+  const filteredRecipes = filterRecipes(recipes);
+  renderRecipes(filteredRecipes);
+});
