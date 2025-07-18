@@ -791,6 +791,10 @@ video {
   margin-bottom: 21px;
 }
 
+.mb-\[20px\]{
+  margin-bottom: 20px;
+}
+
 .box-border{
   box-sizing: border-box;
 }
@@ -931,6 +935,20 @@ video {
 
 .h-\[324px\]{
   height: 324px;
+}
+
+.h-\[192px\]{
+  height: 192px;
+}
+
+.h-fit{
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
+.h-min{
+  height: -moz-min-content;
+  height: min-content;
 }
 
 .max-h-\[4lh\]{

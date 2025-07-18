@@ -31,10 +31,10 @@
       <img src="./assets/images/hero-bg.png" class="absolute top-0 left-0 w-full h-full object-cover z-1" alt="Photo d'un plat de cuisine.">
     </section>
     <section class="w-full bg-quaternary pl-[104px] pr-[104px] pt-[21px] pb-[100px] flex flex-col gap-[55px]">
-      <div class="flex w-full items-center justify-between max-w-[1236px] mx-auto">
-        <div class="flex items-center gap-[66px]">
+      <div class="flex w-full justify-between max-w-[1236px] mx-auto">
+        <div class="flex gap-[66px]">
           <div id="ingredients-dropdown-container" class="flex-col">
-            <div id="ingredients-dropdown" class="border-none text-primary font-manrope text-[16px] font-[500] leading-[140%] w-[192px] rounded-[11px] bg-white">
+            <div id="ingredients-dropdown" class="border-none h-min text-primary font-manrope text-[16px] font-[500] leading-[140%] w-[192px] rounded-[11px] bg-white">
               <div id="ingredients-dropdown-label" class="flex items-center justify-between p-[16px] cursor-pointer">
                 <p class="text-primary font-manrope text-[16px] font-[500] leading-[140%]">Ingrédients</p>
                 <div id="ingredients-dropdown-icn" class="ease-out duration-200 flex items-center justify-center ">
@@ -44,7 +44,7 @@
                 </div>
               </div>
               <div id="ingredients-dropdown-content" class="h-[0px] overflow-hidden">
-                <input type="text" class="border-[1px] border-primary rounded-[2px] outline-none text-primary font-manrope text-[14px] font-[400] leading-[100%] w-[calc(100%-32px)] p-[8px] mx-[16px] mb-[11px]">
+                <input id="ingredients-search-input" type="text" class="border-[1px] border-primary rounded-[2px] outline-none text-primary font-manrope text-[14px] font-[400] leading-[100%] w-[calc(100%-32px)] p-[8px] mx-[16px] mb-[11px]">
                 <div id="ingredients-checked-filters" class="flex flex-col gap-[4px] mb-[21px]">
                 </div>
                 <div id="ingredients-unchecked-filters" class="flex flex-col gap-[13px]">
@@ -52,7 +52,7 @@
               </div>
             </div>
           </div>
-          <div id="appareils-dropdown" class="border-none text-primary font-manrope text-[16px] font-[500] leading-[140%] w-[192px] rounded-[11px] bg-white">
+          <div id="appareils-dropdown" class="border-none h-min text-primary font-manrope text-[16px] font-[500] leading-[140%] w-[192px] rounded-[11px] bg-white">
             <div id="appareils-dropdown-label" class="flex items-center justify-between p-[16px] cursor-pointer">
               <p class="text-primary font-manrope text-[16px] font-[500] leading-[140%]">Appareils</p>
               <div id="appareils-dropdown-icn" class="ease-out duration-200 flex items-center justify-center ">
@@ -62,14 +62,14 @@
               </div>
             </div>
             <div id="appareils-dropdown-content" class="h-[0px] overflow-hidden">
-              <input type="text" class="border-[1px] border-primary rounded-[2px] outline-none text-primary font-manrope text-[14px] font-[400] leading-[100%] w-[calc(100%-32px)] p-[8px] mx-[16px] mb-[11px]">
+              <input id="appareils-search-input" type="text" class="border-[1px] border-primary rounded-[2px] outline-none text-primary font-manrope text-[14px] font-[400] leading-[100%] w-[calc(100%-32px)] p-[8px] mx-[16px] mb-[11px]">
               <div id="appareils-checked-filters" class="flex flex-col gap-[4px] mb-[21px]">
               </div>
               <div id="appareils-unchecked-filters" class="flex flex-col gap-[13px]">
               </div>
             </div>
           </div>
-          <div id="ustensiles-dropdown" class="border-none text-primary font-manrope text-[16px] font-[500] leading-[140%] w-[192px] rounded-[11px] bg-white">
+          <div id="ustensiles-dropdown" class="border-none h-min text-primary font-manrope text-[16px] font-[500] leading-[140%] w-[192px] rounded-[11px] bg-white">
             <div id="ustensiles-dropdown-label" class="flex items-center justify-between p-[16px] cursor-pointer">
               <p class="text-primary font-manrope text-[16px] font-[500] leading-[140%]">Ustensiles</p>
               <div id="ustensiles-dropdown-icn" class="ease-out duration-200 flex items-center justify-center ">
@@ -79,7 +79,7 @@
               </div>
             </div>
             <div id="ustensiles-dropdown-content" class="h-[0px] overflow-hidden">
-              <input type="text" class="border-[1px] border-primary rounded-[2px] outline-none text-primary font-manrope text-[14px] font-[400] leading-[100%] w-[calc(100%-32px)] p-[8px] mx-[16px] mb-[11px]">
+              <input id="ustensiles-search-input" type="text" class="border-[1px] border-primary rounded-[2px] outline-none text-primary font-manrope text-[14px] font-[400] leading-[100%] w-[calc(100%-32px)] p-[8px] mx-[16px] mb-[11px]">
               <div id="ustensiles-checked-filters" class="flex flex-col gap-[4px] mb-[21px]">
               </div>
               <div id="ustensiles-unchecked-filters" class="flex flex-col gap-[13px]">
