@@ -1,6 +1,7 @@
 import { recipes } from "../../data/recipes.js";
 import { addUrlParams, filterRecipes, removeUrlParam } from "../api/api.js";
 
+// ----- RECETTES -----
 // This function takes an array, iterates over it and renders each recipe to the DOM
 export function renderRecipes(recipes) {
   const recipesGallery = document.getElementById("recipes-gallery");
@@ -41,8 +42,12 @@ export function renderRecipe(recipe) {
               .map((ingredient) => {
                 return `
                 <div class="flex flex-col gap-[1px]">
-                  <p class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">${ingredient.ingredient}</p>
-                  <p class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">${ingredient.quantity} ${ingredient.unit}</p>
+                  <p class="text-primary font-manrope text-[14px] font-[500] leading-[140%]">${
+                    ingredient.ingredient
+                  }</p>
+                  <p class="text-tertiary font-manrope text-[14px] font-[400] leading-[140%]">${
+                    ingredient.quantity ? ingredient.quantity : ""
+                  } ${ingredient.unit ? ingredient.unit : ""}</p>
                 </div>
               `;
               })
@@ -55,6 +60,13 @@ export function renderRecipe(recipe) {
   document
     .getElementById("recipes-gallery")
     .insertAdjacentHTML("beforeend", recipeElement);
+}
+
+// ----- FILTRES -----
+// This function updates the counter for recipes
+export function updateRecipesCounter(recipes) {
+  const recipesCounter = document.getElementById("recipes-counter");
+  recipesCounter.innerText = `${recipes.length} recettes`;
 }
 
 // This function renders the HTML for an option in the checked or unchecked format
@@ -73,12 +85,6 @@ function renderSelectOption(option, checked, selectType) {
   `;
 
   targetGallery.insertAdjacentHTML("beforeend", element);
-}
-
-// This function updates the counter for recipes
-export function updateRecipesCounter(recipes) {
-  const recipesCounter = document.getElementById("recipes-counter");
-  recipesCounter.innerText = `${recipes.length} recettes`;
 }
 
 // This function updates the empty selects with the corresponding options
@@ -104,7 +110,9 @@ export function updateSelect(selectType, recipes) {
   // Toggle dropdown open / close
   newSelectLabel.addEventListener("click", (e) => {
     selectContent.classList.toggle("h-[324px]");
+    select.classList.toggle("h-[192px]");
     selectContent.classList.toggle("overflow-y-scroll");
+    selectContent.classList.toggle("mb-[20px]");
     document
       .getElementById(selectType + "-dropdown-icn")
       .classList.toggle("rotate-180");
@@ -133,12 +141,74 @@ export function updateSelect(selectType, recipes) {
     }
   });
 
-  allOptions.forEach((option) => {
+  const sortedOptions = allOptions
+    .map(
+      (option) => option.charAt(0).toUpperCase() + option.slice(1).toLowerCase()
+    )
+    .filter((option, index, array) => {
+      const normalizedOption = option.toLowerCase().normalize("NFD");
+
+      for (let i = 0; i < index; i++) {
+        const normalizedExisting = array[i]
+          .toLowerCase()
+          // Cette méthode remplace les caractères spéciaux par des caractères normaux
+          .normalize("NFD");
+
+        if (normalizedOption === normalizedExisting) {
+          return false;
+        }
+      }
+
+      if (option.endsWith("s")) {
+        const singularForm = option.slice(0, -1);
+        if (array.includes(singularForm)) {
+          return false;
+        }
+      }
+
+      const pluralForm = option + "s";
+      if (array.includes(pluralForm)) {
+        const singularIndex = array.indexOf(option);
+        const pluralIndex = array.indexOf(pluralForm);
+        return singularIndex <= pluralIndex;
+      }
+
+      return true;
+    })
+    .sort();
+
+  sortedOptions.forEach((option) => {
     renderSelectOption(option, false, selectType);
   });
 
   // Add event listeners to all checkboxes
   addCheckboxListeners(selectType, allOptions, checkedOptions);
+  addSearchInputListeners(selectType);
+}
+
+// This function filters the options based on the search input
+function filterOptions(searchInput, selectType) {
+  const allSearchInputs = searchInput.split(" ");
+  const uncheckedGallery = document.getElementById(
+    selectType + "-unchecked-filters"
+  );
+
+  uncheckedGallery.querySelectorAll("div").forEach((option) => {
+    const optionText = option.querySelector("label").textContent.toLowerCase();
+    const shouldShow = allSearchInputs.every((input) =>
+      optionText.includes(input.toLowerCase())
+    );
+    option.style.display = shouldShow ? "flex" : "none";
+  });
+}
+
+// ----- LISTENERS -----
+// This function adds the corresponding listener to the search input
+function addSearchInputListeners(selectType) {
+  const searchInput = document.getElementById(selectType + "-search-input");
+  searchInput.addEventListener("input", (e) => {
+    filterOptions(e.target.value, selectType);
+  });
 }
 
 // This function adds the corresponding listener to checked and unchecked boxes
@@ -188,6 +258,7 @@ function addCheckboxListeners(selectType, allOptions, checkedOptions) {
   });
 }
 
+// ----- INIT -----
 // Init functions
 renderRecipes(recipes);
 updateSelect("ingredients", recipes);
