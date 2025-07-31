@@ -44,46 +44,83 @@
                 </div>
               </div>
               <div id="ingredients-dropdown-content" class="h-[0px] overflow-hidden">
-                <input id="ingredients-search-input" type="text" class="border-[1px] border-primary rounded-[2px] outline-none text-primary font-manrope text-[14px] font-[400] leading-[100%] w-[calc(100%-32px)] p-[8px] mx-[16px] mb-[11px]">
+                <div class="relative h-[36px] border-[1px] border-primary rounded-[2px] outline-none text-primary font-manrope text-[14px] font-[400] leading-[100%] w-[calc(100%-32px)] p-[8px] mx-[16px] mb-[11px] flex items-center gap-[10px]">
+                  <input id="ingredients-search-input" class="absolute left-[12px] top-[10px] bottom-[10px] right-[41px] w-[calc(100%-53px)] h-[calc(100%-20px)] outline-none flex" type="text">
+                  <svg class="absolute right-[12px] top-[12px]" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <circle cx="5" cy="5" r="4.75" stroke="#7A7A7A" stroke-width="0.5"/>
+                    <line x1="9.17678" y1="9.32322" x2="13.6768" y2="13.8232" stroke="#7A7A7A" stroke-width="0.5"/>
+                  </svg>
+                  <svg class="absolute right-[35px] top-[14px] hidden cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
+                    <path d="M7 7L4 4M4 4L1 1M4 4L7 1M4 4L1 7" stroke="#7A7A7A" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
                 <div id="ingredients-checked-filters" class="flex flex-col gap-[4px] mb-[21px]">
                 </div>
                 <div id="ingredients-unchecked-filters" class="flex flex-col gap-[13px]">
                 </div>
               </div>
             </div>
-          </div>
-          <div id="appareils-dropdown" class="border-none h-min text-primary font-manrope text-[16px] font-[500] leading-[140%] w-[192px] rounded-[11px] bg-white">
-            <div id="appareils-dropdown-label" class="flex items-center justify-between p-[16px] cursor-pointer">
-              <p class="text-primary font-manrope text-[16px] font-[500] leading-[140%]">Appareils</p>
-              <div id="appareils-dropdown-icn" class="ease-out duration-200 flex items-center justify-center ">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="8" viewBox="0 0 15 8" fill="none">
-                  <path d="M1 1L7.5 7L14 1" stroke="#1B1B1B" stroke-linecap="round"/>
-                </svg>
-              </div>
-            </div>
-            <div id="appareils-dropdown-content" class="h-[0px] overflow-hidden">
-              <input id="appareils-search-input" type="text" class="border-[1px] border-primary rounded-[2px] outline-none text-primary font-manrope text-[14px] font-[400] leading-[100%] w-[calc(100%-32px)] p-[8px] mx-[16px] mb-[11px]">
-              <div id="appareils-checked-filters" class="flex flex-col gap-[4px] mb-[21px]">
-              </div>
-              <div id="appareils-unchecked-filters" class="flex flex-col gap-[13px]">
-              </div>
+            <div id="ingredients-checked-filters-container" class="flex flex-col gap-[4px] mt-[21px]">
             </div>
           </div>
-          <div id="ustensiles-dropdown" class="border-none h-min text-primary font-manrope text-[16px] font-[500] leading-[140%] w-[192px] rounded-[11px] bg-white">
-            <div id="ustensiles-dropdown-label" class="flex items-center justify-between p-[16px] cursor-pointer">
-              <p class="text-primary font-manrope text-[16px] font-[500] leading-[140%]">Ustensiles</p>
-              <div id="ustensiles-dropdown-icn" class="ease-out duration-200 flex items-center justify-center ">
-                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="8" viewBox="0 0 15 8" fill="none">
-                  <path d="M1 1L7.5 7L14 1" stroke="#1B1B1B" stroke-linecap="round"/>
-                </svg>
+          <div id="appareils-dropdown-container" class="flex-col">
+            <div id="appareils-dropdown" class="border-none h-min text-primary font-manrope text-[16px] font-[500] leading-[140%] w-[192px] rounded-[11px] bg-white">
+              <div id="appareils-dropdown-label" class="flex items-center justify-between p-[16px] cursor-pointer">
+                <p class="text-primary font-manrope text-[16px] font-[500] leading-[140%]">Appareils</p>
+                <div id="appareils-dropdown-icn" class="ease-out duration-200 flex items-center justify-center ">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="8" viewBox="0 0 15 8" fill="none">
+                    <path d="M1 1L7.5 7L14 1" stroke="#1B1B1B" stroke-linecap="round"/>
+                  </svg>
+                </div>
+              </div>
+              <div id="appareils-dropdown-content" class="h-[0px] overflow-hidden">
+                <div class="relative h-[36px] border-[1px] border-primary rounded-[2px] outline-none text-primary font-manrope text-[14px] font-[400] leading-[100%] w-[calc(100%-32px)] p-[8px] mx-[16px] mb-[11px] flex items-center gap-[10px]">
+                  <input id="appareils-search-input" class="absolute left-[12px] top-[10px] bottom-[10px] right-[41px] w-[calc(100%-53px)] h-[calc(100%-20px)] outline-none" type="text">
+                  <svg class="absolute right-[12px] top-[12px]" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <circle cx="5" cy="5" r="4.75" stroke="#7A7A7A" stroke-width="0.5"/>
+                    <line x1="9.17678" y1="9.32322" x2="13.6768" y2="13.8232" stroke="#7A7A7A" stroke-width="0.5"/>
+                  </svg>
+                  <svg class="absolute right-[35px] top-[14px] cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
+                    <path d="M7 7L4 4M4 4L1 1M4 4L7 1M4 4L1 7" stroke="#7A7A7A" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div id="appareils-checked-filters" class="flex flex-col gap-[4px] mb-[21px]">
+                </div>
+                <div id="appareils-unchecked-filters" class="flex flex-col gap-[13px]">
+                </div>
               </div>
             </div>
-            <div id="ustensiles-dropdown-content" class="h-[0px] overflow-hidden">
-              <input id="ustensiles-search-input" type="text" class="border-[1px] border-primary rounded-[2px] outline-none text-primary font-manrope text-[14px] font-[400] leading-[100%] w-[calc(100%-32px)] p-[8px] mx-[16px] mb-[11px]">
-              <div id="ustensiles-checked-filters" class="flex flex-col gap-[4px] mb-[21px]">
+            <div id="appareils-checked-filters-container" class="flex flex-col gap-[4px] mt-[21px]">
+            </div>
+          </div>
+          <div id="ustensiles-dropdown-container" class="flex-col">
+            <div id="ustensiles-dropdown" class="border-none h-min text-primary font-manrope text-[16px] font-[500] leading-[140%] w-[192px] rounded-[11px] bg-white">
+              <div id="ustensiles-dropdown-label" class="flex items-center justify-between p-[16px] cursor-pointer">
+                <p class="text-primary font-manrope text-[16px] font-[500] leading-[140%]">Ustensiles</p>
+                <div id="ustensiles-dropdown-icn" class="ease-out duration-200 flex items-center justify-center ">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="15" height="8" viewBox="0 0 15 8" fill="none">
+                    <path d="M1 1L7.5 7L14 1" stroke="#1B1B1B" stroke-linecap="round"/>
+                  </svg>
+                </div>
               </div>
-              <div id="ustensiles-unchecked-filters" class="flex flex-col gap-[13px]">
+              <div id="ustensiles-dropdown-content" class="h-[0px] overflow-hidden">
+                <div class="relative h-[36px] border-[1px] border-primary rounded-[2px] outline-none text-primary font-manrope text-[14px] font-[400] leading-[100%] w-[calc(100%-32px)] p-[8px] mx-[16px] mb-[11px] flex items-center gap-[10px]">
+                  <input id="ustensiles-search-input" class="absolute left-[12px] top-[10px] bottom-[10px] right-[41px] w-[calc(100%-53px)] h-[calc(100%-20px)] outline-none flex" type="text">
+                  <svg class="absolute right-[12px] top-[12px]" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <circle cx="5" cy="5" r="4.75" stroke="#7A7A7A" stroke-width="0.5"/>
+                    <line x1="9.17678" y1="9.32322" x2="13.6768" y2="13.8232" stroke="#7A7A7A" stroke-width="0.5"/>
+                  </svg>
+                  <svg class="absolute right-[35px] top-[14px] cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
+                    <path d="M7 7L4 4M4 4L1 1M4 4L7 1M4 4L1 7" stroke="#7A7A7A" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </div>
+                <div id="ustensiles-checked-filters" class="flex flex-col gap-[4px] mb-[21px]">
+                </div>
+                <div id="ustensiles-unchecked-filters" class="flex flex-col gap-[13px]">
+                </div>
               </div>
+            </div>
+            <div id="ustensiles-checked-filters-container" class="flex flex-col gap-[4px] mt-[21px]">
             </div>
           </div>
         </div>

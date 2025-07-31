@@ -1,8 +1,6 @@
 import { recipes } from "../../data/recipes.js";
 import { addUrlParams, filterRecipes, removeUrlParam } from "../api/api.js";
 
-// ----- RECETTES -----
-// This function takes an array, iterates over it and renders each recipe to the DOM
 export function renderRecipes(recipes) {
   const recipesGallery = document.getElementById("recipes-gallery");
 
@@ -15,7 +13,6 @@ export function renderRecipes(recipes) {
   updateRecipesCounter(recipes);
 }
 
-// This is the template generated in JS for a single recipe
 export function renderRecipe(recipe) {
   const recipeElement = `
     <article class="w-full h-[731px] bg-white rounded-[21px] shadow-card relative none flex-col overflow-hidden">
@@ -62,14 +59,11 @@ export function renderRecipe(recipe) {
     .insertAdjacentHTML("beforeend", recipeElement);
 }
 
-// ----- FILTRES -----
-// This function updates the counter for recipes
 export function updateRecipesCounter(recipes) {
   const recipesCounter = document.getElementById("recipes-counter");
   recipesCounter.innerText = `${recipes.length} recettes`;
 }
 
-// This function renders the HTML for an option in the checked or unchecked format
 function renderSelectOption(option, checked, selectType) {
   const targetGallery = checked
     ? document.getElementById(selectType + "-checked-filters")
@@ -80,6 +74,28 @@ function renderSelectOption(option, checked, selectType) {
       <input type="checkbox" value="${option}" ${
     checked ? "checked" : ""
   } class="peer border-none opacity-0 outline-none absolute top-0 left-0 z-10 bg-[transparent] w-full h-full cursor-pointer">
+      ${
+        checked
+          ? `
+          <svg
+            class="absolute right-[16px] top-[7px] hidden peer-hover:block"
+            xmlns="http://www.w3.org/2000/svg"
+            width="17"
+            height="17"
+            viewBox="0 0 17 17"
+            fill="none"
+          >
+            <circle cx="8.5" cy="8.5" r="8.5" fill="black" />
+            <path
+              d="M11 11L8.5 8.5M8.5 8.5L6 6M8.5 8.5L11 6M8.5 8.5L6 11"
+              stroke="#FFD15B"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        `
+          : ""
+      }
       <label class="text-primary font-manrope text-[14px] font-[400] leading-[100%] w-full peer-checked:bg-secondary peer-checked:py-[9px] px-[16px] cursor-pointer">${option}</label>
     </div>
   `;
@@ -87,27 +103,54 @@ function renderSelectOption(option, checked, selectType) {
   targetGallery.insertAdjacentHTML("beforeend", element);
 }
 
-// This function updates the empty selects with the corresponding options
+function renderCheckedOption(option) {
+  return `
+    <div class="flex items-center justify-between bg-secondary py-[17px] px-[18px] rounded-[10px] cursor-pointer">
+      <span class="text-primary font-manrope text-[14px] font-[400] leading-[100%]">${option}</span>
+      <svg class="cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="14" height="13" viewBox="0 0 14 13" fill="none">
+        <path d="M12 11.5L7 6.5M7 6.5L2 1.5M7 6.5L12 1.5M7 6.5L2 11.5" stroke="#1B1B1B" stroke-width="2.16667" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+  `;
+}
+
+function updateCheckedFiltersContainer(selectType) {
+  const container = document.getElementById(
+    selectType + "-checked-filters-container"
+  );
+  const params = new URLSearchParams(window.location.search);
+  const checkedOptions = params.getAll(selectType);
+
+  container.innerHTML = "";
+
+  checkedOptions.forEach((option) => {
+    const optionElement = document.createElement("div");
+    optionElement.innerHTML = renderCheckedOption(option, selectType);
+
+    const closeIcon = optionElement.querySelector("svg");
+    closeIcon.addEventListener("click", () => {
+      removeUrlParam(selectType, option);
+      updateFilters(selectType);
+      updateCheckedFiltersContainer(selectType);
+
+      const updated = getFilteredRecipesFromUrl();
+      renderRecipes(updated);
+    });
+
+    container.appendChild(optionElement.firstElementChild);
+  });
+}
+
 export function updateSelect(selectType, recipes) {
   const select = document.getElementById(selectType + "-dropdown");
   const selectLabel = document.getElementById(selectType + "-dropdown-label");
-  const selectCheckedFilters = document.getElementById(
-    selectType + "-checked-filters"
-  );
-  const selectUncheckedFilters = document.getElementById(
-    selectType + "-unchecked-filters"
-  );
   const selectContent = document.getElementById(
     selectType + "-dropdown-content"
   );
-  const allOptions = [];
-  const checkedOptions = new Set();
 
-  // Remove existing event listener to prevent duplicates
   const newSelectLabel = selectLabel.cloneNode(true);
   selectLabel.parentNode.replaceChild(newSelectLabel, selectLabel);
 
-  // Toggle dropdown open / close
   newSelectLabel.addEventListener("click", (e) => {
     selectContent.classList.toggle("h-[324px]");
     select.classList.toggle("h-[192px]");
@@ -118,9 +161,100 @@ export function updateSelect(selectType, recipes) {
       .classList.toggle("rotate-180");
   });
 
+  updateFilters(selectType);
+
+  addCheckboxListeners(selectType);
+  addSearchInputListeners(selectType);
+}
+
+function filterOptions(searchInput, selectType) {
+  const allSearchInputs = searchInput.split(" ");
+  const uncheckedGallery = document.getElementById(
+    selectType + "-unchecked-filters"
+  );
+
+  uncheckedGallery.querySelectorAll("div").forEach((option) => {
+    const optionText = option.querySelector("label").textContent.toLowerCase();
+    const shouldShow = allSearchInputs.every((input) =>
+      optionText.includes(input.toLowerCase())
+    );
+    option.style.display = shouldShow ? "flex" : "none";
+  });
+}
+
+function addSearchInputListeners(selectType) {
+  const searchInput = document.getElementById(selectType + "-search-input");
+  const closeIcon = searchInput.parentElement.querySelector('svg[width="8"]');
+
+  searchInput.addEventListener("input", (e) => {
+    const value = e.target.value;
+    filterOptions(value, selectType);
+
+    if (value.length > 0) {
+      closeIcon.classList.remove("hidden");
+    } else {
+      closeIcon.classList.add("hidden");
+    }
+  });
+
+  closeIcon.addEventListener("click", () => {
+    searchInput.value = "";
+    searchInput.focus();
+    closeIcon.classList.add("hidden");
+    filterOptions("", selectType);
+  });
+}
+
+export function getFilteredRecipesFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+
+  const ingredientFilters = params.getAll("ingredients");
+  const utensilFilters = params.getAll("ustensiles");
+  const applianceFilters = params.getAll("appareils");
+
+  return recipes.filter((r) => {
+    const okIngredients =
+      ingredientFilters.length === 0
+        ? true
+        : ingredientFilters.every((ing) =>
+            r.ingredients.some(
+              (obj) => obj.ingredient.toLowerCase() === ing.toLowerCase()
+            )
+          );
+
+    const okUtensils =
+      utensilFilters.length === 0
+        ? true
+        : utensilFilters.every((u) =>
+            r.ustensils.some((obj) => obj.toLowerCase() === u.toLowerCase())
+          );
+
+    const okAppliances =
+      applianceFilters.length === 0
+        ? true
+        : applianceFilters.every(
+            (a) => r.appliance.toLowerCase() === a.toLowerCase()
+          );
+
+    return okIngredients && okUtensils && okAppliances;
+  });
+}
+
+function updateFilters(selectType) {
+  const selectCheckedFilters = document.getElementById(
+    selectType + "-checked-filters"
+  );
+  const selectUncheckedFilters = document.getElementById(
+    selectType + "-unchecked-filters"
+  );
+
+  const params = new URLSearchParams(window.location.search);
+  const checkedOptions = params.getAll(selectType);
+
   selectCheckedFilters.innerHTML = "";
   selectUncheckedFilters.innerHTML = "";
 
+  const allOptions = [];
   recipes.forEach((recipe) => {
     if (selectType === "ingredients") {
       recipe.ingredients.forEach((ingredientObj) => {
@@ -149,10 +283,7 @@ export function updateSelect(selectType, recipes) {
       const normalizedOption = option.toLowerCase().normalize("NFD");
 
       for (let i = 0; i < index; i++) {
-        const normalizedExisting = array[i]
-          .toLowerCase()
-          // Cette méthode remplace les caractères spéciaux par des caractères normaux
-          .normalize("NFD");
+        const normalizedExisting = array[i].toLowerCase().normalize("NFD");
 
         if (normalizedOption === normalizedExisting) {
           return false;
@@ -178,94 +309,54 @@ export function updateSelect(selectType, recipes) {
     .sort();
 
   sortedOptions.forEach((option) => {
-    renderSelectOption(option, false, selectType);
-  });
-
-  // Add event listeners to all checkboxes
-  addCheckboxListeners(selectType, allOptions, checkedOptions);
-  addSearchInputListeners(selectType);
-}
-
-// This function filters the options based on the search input
-function filterOptions(searchInput, selectType) {
-  const allSearchInputs = searchInput.split(" ");
-  const uncheckedGallery = document.getElementById(
-    selectType + "-unchecked-filters"
-  );
-
-  uncheckedGallery.querySelectorAll("div").forEach((option) => {
-    const optionText = option.querySelector("label").textContent.toLowerCase();
-    const shouldShow = allSearchInputs.every((input) =>
-      optionText.includes(input.toLowerCase())
+    const isChecked = checkedOptions.some(
+      (checkedOption) => checkedOption.toLowerCase() === option.toLowerCase()
     );
-    option.style.display = shouldShow ? "flex" : "none";
+    renderSelectOption(option, isChecked, selectType);
   });
+
+  updateCheckedFiltersContainer(selectType);
 }
 
-// ----- LISTENERS -----
-// This function adds the corresponding listener to the search input
-function addSearchInputListeners(selectType) {
-  const searchInput = document.getElementById(selectType + "-search-input");
-  searchInput.addEventListener("input", (e) => {
-    filterOptions(e.target.value, selectType);
-  });
-}
-
-// This function adds the corresponding listener to checked and unchecked boxes
-function addCheckboxListeners(selectType, allOptions, checkedOptions) {
-  const selectCheckedFilters = document.getElementById(
-    selectType + "-checked-filters"
+function addCheckboxListeners(selectType) {
+  const uncheckedGallery = document.getElementById(
+    `${selectType}-unchecked-filters`
   );
-  const selectUncheckedFilters = document.getElementById(
-    selectType + "-unchecked-filters"
-  );
+  uncheckedGallery.addEventListener("change", onCheckboxToggle);
+  document
+    .getElementById(`${selectType}-checked-filters`)
+    .addEventListener("change", onCheckboxToggle);
 
-  // Unchecked filter listener
-  selectUncheckedFilters.addEventListener("change", (e) => {
-    if (e.target.type === "checkbox") {
-      const option = e.target.value;
-      if (e.target.checked) {
-        e.target.closest("div").style.display = "none";
-        checkedOptions.add(option);
-        renderSelectOption(option, true, selectType);
+  function onCheckboxToggle(e) {
+    if (e.target.type !== "checkbox") return;
+    const option = e.target.value;
 
-        // Add to URL parameters
-        addUrlParams(selectType, option);
-      }
+    const searchInput = document.getElementById(selectType + "-search-input");
+    const currentSearchValue = searchInput ? searchInput.value : "";
+
+    if (e.target.checked) {
+      addUrlParams(selectType, option);
+      updateFilters(selectType);
+    } else {
+      removeUrlParam(selectType, option);
+      updateFilters(selectType);
     }
-  });
 
-  // Check filter listener
-  selectCheckedFilters.addEventListener("change", (e) => {
-    if (e.target.type === "checkbox") {
-      const option = e.target.value;
-
-      if (!e.target.checked) {
-        checkedOptions.delete(option);
-        e.target.closest("div").remove();
-        const originalOption = selectUncheckedFilters.querySelector(
-          `input[value="${option}"]`
-        );
-        if (originalOption) {
-          originalOption.closest("div").style.display = "flex";
-          originalOption.checked = false;
-        }
-
-        // Remove from URL parameters
-        removeUrlParam(selectType, option);
-      }
+    if (currentSearchValue) {
+      filterOptions(currentSearchValue, selectType);
     }
-  });
+
+    const updated = getFilteredRecipesFromUrl();
+    renderRecipes(updated);
+  }
 }
 
-// ----- INIT -----
-// Init functions
-renderRecipes(recipes);
+const initialRecipes = getFilteredRecipesFromUrl();
+renderRecipes(initialRecipes);
 updateSelect("ingredients", recipes);
 updateSelect("appareils", recipes);
 updateSelect("ustensiles", recipes);
 
-// Listen for URL changes and update recipes
 window.addEventListener("recipesShouldUpdate", (event) => {
   const filteredRecipes = filterRecipes(recipes);
   renderRecipes(filteredRecipes);

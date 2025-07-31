@@ -2,16 +2,15 @@ export function filterRecipes(recipes) {
   const url = new URL(window.location.href);
   const searchParams = url.searchParams;
 
-  const ingredients = searchParams.get("ingredients");
-  const appliance = searchParams.get("appliance");
-  const ustensils = searchParams.get("ustensils");
+  const ingredients = searchParams.getAll("ingredients");
+  const appareils = searchParams.getAll("appareils");
+  const ustensiles = searchParams.getAll("ustensiles");
 
   let filteredRecipes = recipes;
 
-  if (ingredients) {
-    const ingredientList = ingredients.split(",").map((item) => item.trim());
+  if (ingredients.length > 0) {
     filteredRecipes = filteredRecipes.filter((recipe) => {
-      return ingredientList.every((ingredient) =>
+      return ingredients.every((ingredient) =>
         recipe.ingredients.some((recipeIngredient) =>
           recipeIngredient.ingredient
             .toLowerCase()
@@ -21,19 +20,17 @@ export function filterRecipes(recipes) {
     });
   }
 
-  if (appliance) {
-    const applianceList = appliance.split(",").map((item) => item.trim());
+  if (appareils.length > 0) {
     filteredRecipes = filteredRecipes.filter((recipe) => {
-      return applianceList.some((app) =>
+      return appareils.some((app) =>
         recipe.appliance.toLowerCase().includes(app.toLowerCase())
       );
     });
   }
 
-  if (ustensils) {
-    const ustensilList = ustensils.split(",").map((item) => item.trim());
+  if (ustensiles.length > 0) {
     filteredRecipes = filteredRecipes.filter((recipe) => {
-      return ustensilList.every((ustensil) =>
+      return ustensiles.every((ustensil) =>
         recipe.ustensils.some((recipeUstensil) =>
           recipeUstensil.toLowerCase().includes(ustensil.toLowerCase())
         )
@@ -41,10 +38,6 @@ export function filterRecipes(recipes) {
     });
   }
 
-  // TODO: There are duplicates in the filters due to
-  // capital letters, and the filtering is taking into
-  // consideration if the recipe has one, i want it to
-  // filter by all filters
   return filteredRecipes;
 }
 
@@ -58,37 +51,40 @@ function handleUrlChange(event) {
   const url = new URL(window.location.href);
   const searchParams = url.searchParams;
 
-  const ingredients = searchParams.get("ingredients");
-  const appliance = searchParams.get("appliance");
-  const ustensils = searchParams.get("ustensils");
+  const ingredients = searchParams.getAll("ingredients");
+  const appareils = searchParams.getAll("appareils");
+  const ustensiles = searchParams.getAll("ustensiles");
 
   console.log("URL changed:", {
     ingredients,
-    appliance,
-    ustensils,
+    appareils,
+    ustensiles,
     fullUrl: window.location.href,
   });
 
   window.dispatchEvent(
     new CustomEvent("recipesShouldUpdate", {
-      detail: { ingredients, appliance, ustensils },
+      detail: { ingredients, appareils, ustensiles },
     })
   );
 }
 
 export function addUrlParams(paramsType, paramsValue) {
   const url = new URL(window.location.href);
-  const currentValues = url.searchParams.get(paramsType);
+  const currentValues = url.searchParams.getAll(paramsType); // Use getAll instead of get
 
-  if (currentValues) {
+  if (currentValues.length > 0) {
     // Check if the value already exists to avoid duplicates
-    const values = currentValues.split(",").map((v) => v.trim());
-    if (!values.includes(paramsValue)) {
-      values.push(paramsValue);
-      url.searchParams.set(paramsType, values.join(","));
+    if (!currentValues.includes(paramsValue)) {
+      currentValues.push(paramsValue);
+      // Remove existing params and add all new ones
+      url.searchParams.delete(paramsType);
+      currentValues.forEach((value) => {
+        url.searchParams.append(paramsType, value);
+      });
     }
   } else {
-    url.searchParams.set(paramsType, paramsValue);
+    url.searchParams.append(paramsType, paramsValue); // Use append instead of set
   }
 
   window.history.pushState({}, "", url);
@@ -103,18 +99,20 @@ export function addUrlParams(paramsType, paramsValue) {
 // This function removes params when unchecked
 export function removeUrlParam(paramsType, paramsValue) {
   const url = new URL(window.location.href);
-  const currentValues = url.searchParams.get(paramsType);
+  const currentValues = url.searchParams.getAll(paramsType); // Use getAll instead of get
 
-  if (currentValues) {
-    const values = currentValues
-      .split(",")
-      .filter((value) => value.trim() !== paramsValue);
+  if (currentValues.length > 0) {
+    const filteredValues = currentValues.filter(
+      (value) => value !== paramsValue
+    );
 
-    if (values.length > 0) {
-      url.searchParams.set(paramsType, values.join(","));
-    } else {
-      url.searchParams.delete(paramsType);
-    }
+    // Remove all existing params
+    url.searchParams.delete(paramsType);
+
+    // Add back the filtered values
+    filteredValues.forEach((value) => {
+      url.searchParams.append(paramsType, value);
+    });
   }
 
   window.history.pushState({}, "", url);
