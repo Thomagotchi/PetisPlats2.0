@@ -18,9 +18,11 @@
   <main>
     <section class="h-[667px] w-full flex flex-col items-center justify-center relative gap-[30px]">
       <h1 class="text-center text-4xl font-bold z-10 font-anton text-secondary text-center text-[44px] max-w-[700px] font-[400] leading-[140%]">CHERCHEZ PARMI PLUS DE 1500 RECETTES DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</h1>
-      <div class="flex items-center justify-between z-10 rounded-[11px] bg-white pt-[10px] pb-[10px] pl-[35px] pr-[10px] w-[954px] gap-[10px]">
-        <input type="text" placeholder="Rechercher une recette, un ingrédient, ..." class="border-none outline-none text-tertiary text-[16px] font-[400] leading-[100%] w-full">
-        <!--RESET BUTTON HERE-->
+      <div class="relative flex items-center justify-between z-10 rounded-[11px] bg-white pt-[10px] pb-[10px] pl-[35px] pr-[10px] w-[954px] gap-[10px]">
+        <input id="main-search-input" type="text" placeholder="Rechercher une recette, un ingrédient, ..." class="border-none outline-none text-tertiary text-[16px] font-[400] leading-[100%] w-full">
+        <svg id="main-search-reset" class="absolute right-[85px] top-[29px] hidden cursor-pointer" xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
+          <path d="M15 15L8.5 8.5M8.5 8.5L2 2M8.5 8.5L15 2M8.5 8.5L2 15" stroke="#7A7A7A" stroke-width="2.16667" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
         <button class="flex items-center justify-center w-[52px] h-[52px] rounded-[10px] border-none outline-none bg-primary text-white hover:bg-secondary hover:text-black  transition-all duration-200">
           <svg xmlns="http://www.w3.org/2000/svg" width="28" height="29" viewBox="0 0 28 29" fill="none">
             <circle cx="10" cy="10.4219" r="9.5" stroke="currentColor"/>

@@ -211,8 +211,26 @@ export function getFilteredRecipesFromUrl() {
   const ingredientFilters = params.getAll("ingredients");
   const utensilFilters = params.getAll("ustensiles");
   const applianceFilters = params.getAll("appareils");
+  const searchValue = params.get("search");
 
   return recipes.filter((r) => {
+    // Apply search filter
+    if (searchValue && searchValue.trim() !== "") {
+      const searchTerm = searchValue.toLowerCase().trim();
+      const recipeName = r.name.toLowerCase();
+      const recipeDescription = r.description.toLowerCase();
+      const recipeIngredients = r.ingredients
+        .map((ing) => ing.ingredient.toLowerCase())
+        .join(" ");
+
+      const matchesSearch =
+        recipeName.includes(searchTerm) ||
+        recipeDescription.includes(searchTerm) ||
+        recipeIngredients.includes(searchTerm);
+
+      if (!matchesSearch) return false;
+    }
+
     const okIngredients =
       ingredientFilters.length === 0
         ? true
@@ -351,11 +369,68 @@ function addCheckboxListeners(selectType) {
   }
 }
 
+export function initializeMainSearch() {
+  const searchInput = document.getElementById("main-search-input");
+  const resetIcon = document.getElementById("main-search-reset");
+
+  if (!searchInput || !resetIcon) return;
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const searchValue = urlParams.get("search");
+  if (searchValue) {
+    searchInput.value = searchValue;
+    resetIcon.classList.remove("hidden");
+  }
+
+  searchInput.addEventListener("input", (e) => {
+    const value = e.target.value;
+
+    if (value.length > 0) {
+      resetIcon.classList.remove("hidden");
+    } else {
+      resetIcon.classList.add("hidden");
+    }
+
+    updateSearchUrlParam(value);
+
+    const updated = getFilteredRecipesFromUrl();
+    renderRecipes(updated);
+  });
+
+  resetIcon.addEventListener("click", () => {
+    searchInput.value = "";
+    resetIcon.classList.add("hidden");
+    updateSearchUrlParam("");
+
+    const updated = getFilteredRecipesFromUrl();
+    renderRecipes(updated);
+  });
+}
+
+function updateSearchUrlParam(searchValue) {
+  const url = new URL(window.location.href);
+
+  if (searchValue && searchValue.trim() !== "") {
+    url.searchParams.set("search", searchValue.trim());
+  } else {
+    url.searchParams.delete("search");
+  }
+
+  window.history.pushState({}, "", url);
+
+  window.dispatchEvent(
+    new CustomEvent("urlChanged", {
+      detail: { searchValue },
+    })
+  );
+}
+
 const initialRecipes = getFilteredRecipesFromUrl();
 renderRecipes(initialRecipes);
 updateSelect("ingredients", recipes);
 updateSelect("appareils", recipes);
 updateSelect("ustensiles", recipes);
+initializeMainSearch();
 
 window.addEventListener("recipesShouldUpdate", (event) => {
   const filteredRecipes = filterRecipes(recipes);

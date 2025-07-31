@@ -773,6 +773,26 @@ video {
   top: 7px;
 }
 
+.right-\[60px\]{
+  right: 60px;
+}
+
+.right-\[100px\]{
+  right: 100px;
+}
+
+.right-\[85px\]{
+  right: 85px;
+}
+
+.top-\[30px\]{
+  top: 30px;
+}
+
+.top-\[29px\]{
+  top: 29px;
+}
+
 .isolate{
   isolation: isolate;
 }
