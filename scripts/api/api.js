@@ -1,3 +1,4 @@
+// Cette fonction filtre les recettes en fonction des params de l'url
 export function filterRecipes(recipes) {
   const url = new URL(window.location.href);
   const searchParams = url.searchParams;
@@ -96,20 +97,17 @@ export function addUrlParams(paramsType, paramsValue) {
   );
 }
 
-// This function removes params when unchecked
 export function removeUrlParam(paramsType, paramsValue) {
   const url = new URL(window.location.href);
-  const currentValues = url.searchParams.getAll(paramsType); // Use getAll instead of get
+  const currentValues = url.searchParams.getAll(paramsType);
 
   if (currentValues.length > 0) {
     const filteredValues = currentValues.filter(
       (value) => value !== paramsValue
     );
 
-    // Remove all existing params
     url.searchParams.delete(paramsType);
 
-    // Add back the filtered values
     filteredValues.forEach((value) => {
       url.searchParams.append(paramsType, value);
     });

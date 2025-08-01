@@ -1,6 +1,13 @@
 import { recipes } from "../../data/recipes.js";
 import { addUrlParams, filterRecipes, removeUrlParam } from "../api/api.js";
 
+// TO DO :
+// Apply early return to all functions
+// Extrapolate nested functions
+// Add Second search function
+// Measure both performances and justify why
+
+// Cette fonction affiche toutes les recettes dans la galerie en partant d'un array
 export function renderRecipes(recipes) {
   const recipesGallery = document.getElementById("recipes-gallery");
 
@@ -13,6 +20,7 @@ export function renderRecipes(recipes) {
   updateRecipesCounter(recipes);
 }
 
+// Cette fonction retourne le HTML pour une recette
 export function renderRecipe(recipe) {
   const recipeElement = `
     <article class="w-full h-[731px] bg-white rounded-[21px] shadow-card relative none flex-col overflow-hidden">
@@ -59,11 +67,13 @@ export function renderRecipe(recipe) {
     .insertAdjacentHTML("beforeend", recipeElement);
 }
 
+// Cette fonction met à jour le compteur de recettes
 export function updateRecipesCounter(recipes) {
   const recipesCounter = document.getElementById("recipes-counter");
   recipesCounter.innerText = `${recipes.length} recettes`;
 }
 
+// Cette fonction retourne le HTML pour une option de filtre (checked / unchecked)
 function renderSelectOption(option, checked, selectType) {
   const targetGallery = checked
     ? document.getElementById(selectType + "-checked-filters")
@@ -103,6 +113,7 @@ function renderSelectOption(option, checked, selectType) {
   targetGallery.insertAdjacentHTML("beforeend", element);
 }
 
+// Cette fonction retourne le HTML pour une option de filtre checked en dehors du select (au dessus de la galerie)
 function renderCheckedOption(option) {
   return `
     <div class="flex items-center justify-between bg-secondary py-[17px] px-[18px] rounded-[10px] cursor-pointer">
@@ -114,6 +125,7 @@ function renderCheckedOption(option) {
   `;
 }
 
+// Cette fonction met à jour le conteneur de filtres cochés avec une option et ajoute le listener de filtration
 function updateCheckedFiltersContainer(selectType) {
   const container = document.getElementById(
     selectType + "-checked-filters-container"
@@ -141,6 +153,7 @@ function updateCheckedFiltersContainer(selectType) {
   });
 }
 
+// Cette fonction met à jour le select avec les options
 export function updateSelect(selectType, recipes) {
   const select = document.getElementById(selectType + "-dropdown");
   const selectLabel = document.getElementById(selectType + "-dropdown-label");
@@ -167,6 +180,7 @@ export function updateSelect(selectType, recipes) {
   addSearchInputListeners(selectType);
 }
 
+// Cette fonction filtre les options du select en fonction de la recherche
 function filterOptions(searchInput, selectType) {
   const allSearchInputs = searchInput.split(" ");
   const uncheckedGallery = document.getElementById(
@@ -336,6 +350,7 @@ function updateFilters(selectType) {
   updateCheckedFiltersContainer(selectType);
 }
 
+// Cette fonction ajoute les listeners aux checkboxes
 function addCheckboxListeners(selectType) {
   const uncheckedGallery = document.getElementById(
     `${selectType}-unchecked-filters`
@@ -369,6 +384,7 @@ function addCheckboxListeners(selectType) {
   }
 }
 
+// Fonction pour la search bar principale
 export function initializeMainSearch() {
   const searchInput = document.getElementById("main-search-input");
   const resetIcon = document.getElementById("main-search-reset");
