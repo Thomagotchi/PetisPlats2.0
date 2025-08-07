@@ -42,12 +42,14 @@ export function filterRecipes(recipes) {
   return filteredRecipes;
 }
 
+// Cette fonction surveille les changements d'URL
 export function watchUrlChange() {
   window.addEventListener("hashchange", handleUrlChange);
   window.addEventListener("popstate", handleUrlChange);
   window.addEventListener("urlChanged", handleUrlChange);
 }
 
+// Cette fonction gère les changements d'URL
 function handleUrlChange(event) {
   const url = new URL(window.location.href);
   const searchParams = url.searchParams;
@@ -70,6 +72,7 @@ function handleUrlChange(event) {
   );
 }
 
+// Cette fonction ajoute les paramètres à l'URL
 export function addUrlParams(paramsType, paramsValue) {
   const url = new URL(window.location.href);
   const currentValues = url.searchParams.getAll(paramsType); // Use getAll instead of get
@@ -97,6 +100,7 @@ export function addUrlParams(paramsType, paramsValue) {
   );
 }
 
+// Cette fonction supprime les paramètres de l'URL
 export function removeUrlParam(paramsType, paramsValue) {
   const url = new URL(window.location.href);
   const currentValues = url.searchParams.getAll(paramsType);
@@ -122,14 +126,5 @@ export function removeUrlParam(paramsType, paramsValue) {
   );
 }
 
-const temporaryTrigger = document.querySelector(
-  '[data-attribute="temporary-trigger"]'
-);
-
-if (temporaryTrigger) {
-  temporaryTrigger.addEventListener("click", () => {
-    addUrlParams("ingredients", "Lait de coco");
-  });
-}
-
+// Cette fonction initialise la surveillance des changements d'URL
 watchUrlChange();
