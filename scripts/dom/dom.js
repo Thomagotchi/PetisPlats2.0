@@ -1,9 +1,6 @@
 import { recipes } from "../../data/recipes.js";
 import { addUrlParams, filterRecipes, removeUrlParam } from "../api/api.js";
 
-// TO DO :
-// Add Second search function
-
 // Cette fonction affiche toutes les recettes dans la galerie en partant d'un array
 export function renderRecipes(recipes) {
   const recipesGallery = document.getElementById("recipes-gallery");
@@ -342,6 +339,64 @@ function matchesApplianceFilters(recipe, applianceFilters) {
   );
 }
 
+// Cette fonction filtre les recettes selon la recherche principale (version filter)
+function filterRecipesBySearch(recipes, searchValue) {
+  if (!searchValue || searchValue.trim() === "") {
+    return recipes;
+  }
+
+  const searchTerm = searchValue.toLowerCase().trim();
+
+  return recipes.filter((recipe) => matchesSearch(recipe, searchTerm));
+}
+
+// Cette fonction filtre les recettes selon la recherche principale (version boucle for)
+function filterRecipesBySearchForLoop(recipes, searchValue) {
+  if (!searchValue || searchValue.trim() === "") {
+    return recipes;
+  }
+
+  const searchTerm = searchValue.toLowerCase().trim();
+  const filteredRecipes = [];
+
+  for (let i = 0; i < recipes.length; i++) {
+    const recipe = recipes[i];
+    if (matchesSearch(recipe, searchTerm)) {
+      filteredRecipes.push(recipe);
+    }
+  }
+
+  return filteredRecipes;
+}
+
+// Cette fonction filtre les recettes selon les filtres de sélection
+function filterRecipesBySelects(
+  recipes,
+  ingredientFilters,
+  utensilFilters,
+  applianceFilters
+) {
+  return recipes.filter((recipe) => {
+    const okIngredients = matchesIngredientFilters(recipe, ingredientFilters);
+    const okUtensils = matchesUtensilFilters(recipe, utensilFilters);
+    const okAppliances = matchesApplianceFilters(recipe, applianceFilters);
+
+    return okIngredients && okUtensils && okAppliances;
+  });
+}
+
+// Cette fonction obtient les recettes filtrées par la recherche principale
+export function getSearchFilteredRecipes() {
+  if (!recipes || recipes.length === 0) return [];
+
+  const params = new URLSearchParams(window.location.search);
+  const searchValue = params.get("search");
+
+  // Deux versions de la fonction de filtrage principale :
+  // return filterRecipesBySearch(recipes, searchValue); // Version programmation fonctionnelle (filter)
+  return filterRecipesBySearchForLoop(recipes, searchValue); // Version programmation native (boucle for)
+}
+
 // Cette fonction filtre les recettes en fonction des paramètres de l'URL
 export function getFilteredRecipesFromUrl() {
   if (!recipes || recipes.length === 0) return [];
@@ -351,20 +406,17 @@ export function getFilteredRecipesFromUrl() {
   const ingredientFilters = params.getAll("ingredients");
   const utensilFilters = params.getAll("ustensiles");
   const applianceFilters = params.getAll("appareils");
-  const searchValue = params.get("search");
 
-  return recipes.filter((recipe) => {
-    if (searchValue && searchValue.trim() !== "") {
-      const searchTerm = searchValue.toLowerCase().trim();
-      if (!matchesSearch(recipe, searchTerm)) return false;
-    }
+  // Applique les filtres de la recherche principale
+  const searchFilteredRecipes = getSearchFilteredRecipes();
 
-    const okIngredients = matchesIngredientFilters(recipe, ingredientFilters);
-    const okUtensils = matchesUtensilFilters(recipe, utensilFilters);
-    const okAppliances = matchesApplianceFilters(recipe, applianceFilters);
-
-    return okIngredients && okUtensils && okAppliances;
-  });
+  // Applique les filtres de sélection
+  return filterRecipesBySelects(
+    searchFilteredRecipes,
+    ingredientFilters,
+    utensilFilters,
+    applianceFilters
+  );
 }
 
 // Cette fonction normalise une option pour la comparaison
