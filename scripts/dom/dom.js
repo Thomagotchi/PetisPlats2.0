@@ -393,8 +393,8 @@ export function getSearchFilteredRecipes() {
   const searchValue = params.get("search");
 
   // Deux versions de la fonction de filtrage principale :
-  // return filterRecipesBySearch(recipes, searchValue); // Version programmation fonctionnelle (filter)
-  return filterRecipesBySearchForLoop(recipes, searchValue); // Version programmation native (boucle for)
+  return filterRecipesBySearch(recipes, searchValue); // Version programmation fonctionnelle (filter)
+  // return filterRecipesBySearchForLoop(recipes, searchValue); // Version programmation native (boucle for)
 }
 
 // Cette fonction filtre les recettes en fonction des paramètres de l'URL
