@@ -471,8 +471,7 @@ function updateFilters(selectType) {
   selectCheckedFilters.innerHTML = "";
   selectUncheckedFilters.innerHTML = "";
 
-  // Always use all recipes for select options, regardless of search
-  const recipesToUse = recipes;
+  const recipesToUse = getSearchFilteredRecipes();
 
   const allOptions = [];
   recipesToUse.forEach((recipe) => {
