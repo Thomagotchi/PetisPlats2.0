@@ -9,9 +9,16 @@ export function renderRecipes(recipes) {
   // Efface la galerie d'abord, quel que soit le nombre de recettes
   recipesGallery.innerHTML = "";
 
+  const searchValue = new URLSearchParams(window.location.search).get("search");
+
   if (!recipes || recipes.length === 0) {
     updateRecipesCounter([]);
+    displayEmptyRecipesError(searchValue);
     return;
+  }
+
+  if (recipes.length > 0) {
+    hideEmptyRecipesError();
   }
 
   recipes.forEach((recipe) => {
@@ -347,7 +354,19 @@ function filterRecipesBySearch(recipes, searchValue) {
 
   const searchTerm = searchValue.toLowerCase().trim();
 
-  return recipes.filter((recipe) => matchesSearch(recipe, searchTerm));
+  const filteredRecipes = recipes.filter((recipe) =>
+    matchesSearch(recipe, searchTerm)
+  );
+
+  if (filteredRecipes.length === 0) {
+    displayEmptyRecipesError(searchValue);
+  }
+
+  if (filteredRecipes.length > 0) {
+    hideEmptyRecipesError();
+  }
+
+  return filteredRecipes;
 }
 
 // Cette fonction filtre les recettes selon la recherche principale (version boucle for)
@@ -364,6 +383,14 @@ function filterRecipesBySearchForLoop(recipes, searchValue) {
     if (matchesSearch(recipe, searchTerm)) {
       filteredRecipes.push(recipe);
     }
+  }
+
+  if (filteredRecipes.length === 0) {
+    displayEmptyRecipesError(searchValue);
+  }
+
+  if (filteredRecipes.length > 0) {
+    hideEmptyRecipesError();
   }
 
   return filteredRecipes;
@@ -635,6 +662,28 @@ function updateSearchUrlParam(searchValue) {
       detail: { searchValue },
     })
   );
+}
+
+// Cette fonction affiche le message d'erreur lorsqu'il n'y a pas de recettes
+function displayEmptyRecipesError(searchValue) {
+  const emptyRecipesError = document.getElementById("empty-recipes-error");
+  const emptyRecipesErrorMsg = document.getElementById(
+    "empty-recipes-error-msg"
+  );
+  if (!emptyRecipesError || !emptyRecipesErrorMsg) return;
+
+  emptyRecipesError.classList.remove("hidden");
+  emptyRecipesErrorMsg.innerText = `Aucune recette ne contient ${
+    searchValue ? `"${searchValue}"` : "ces options"
+  } vous pouvez chercher "tarte aux pommes", "poisson", etc.`;
+}
+
+// Cette fonction cache le message d'erreur lorsqu'il y a des recettes
+function hideEmptyRecipesError() {
+  const emptyRecipesError = document.getElementById("empty-recipes-error");
+  if (!emptyRecipesError) return;
+
+  emptyRecipesError.classList.add("hidden");
 }
 
 // Cette fonction initialise la page
